@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.54",
+    "@babel/preset-env": "^7.0.0-beta.54",
+    "@babel/register": "^7.0.0-beta.54",
+    "@types/node": "^10.5.2",
+    "eslint": "^5.2.0",
+    "nyc": "^12.0.2",
+    "sarg": "^2.0.2",
+    "source-map-support": "^0.5.6",
+    "ts-node": "^7.0.0",
+    "typescript": "^3.1.0-dev.20180721"
+  },
+  "name": "valsch",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "test": "./node_modules/.bin/sarg --require source-map-support/register --require ts-node/register --require @babel/register -b \"test/**/*.js\"",
+    "coverage": "./node_modules/.bin/nyc npm test"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
