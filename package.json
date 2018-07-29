@@ -16,6 +16,7 @@
   "main": "lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
+    "tdd": "./node_modules/.bin/sarg -w src,test --require source-map-support/register --require ts-node/register --require @babel/register -b \"test/**/*.js\"",
     "test": "./node_modules/.bin/sarg --require source-map-support/register --require ts-node/register --require @babel/register -b \"test/**/*.js\"",
     "coverage": "./node_modules/.bin/nyc npm test"
   },
