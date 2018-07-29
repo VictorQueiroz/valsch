@@ -1,2 +1,2 @@
 test/
-src/
+.nyc_output/
