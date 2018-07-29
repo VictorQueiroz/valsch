@@ -28,6 +28,6 @@ export default class RuleArrayOf<T> extends Rule {
         if(failuresCount > 0)
             return new ValidationResult(failures);
 
-        return true;
+        return new ValidationResult();
     }
 }
