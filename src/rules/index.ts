@@ -6,6 +6,7 @@ import RuleConditional, { GetRuleFunction } from './RuleConditional';
 import RuleOr from './RuleOr';
 import RuleTypeOf from './RuleTypeOf';
 import RuleRegularExpression from './RuleRegularExpression';
+import RuleRange from './RuleRange';
 
 export function arrayOf(schema: Schema) {
     return new RuleArrayOf(new Validator(schema)).setName('Array');
@@ -24,6 +25,13 @@ export function or(...rules: Rule[]) {
 }
 export function conditional(fn: GetRuleFunction) {
     return new RuleConditional(fn);
+}
+export function min(value: number) {
+    return new RuleRange(value, 'gte').setName('min');
+}
+export function max(value: number) {
+    return new RuleRange(value, 'lte').setName('max');
+}
 /**
  * Invalidates the field if the regular expression fails
  * @param value Regular expression to be executed in the value
