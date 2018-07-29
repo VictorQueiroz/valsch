@@ -1,6 +1,6 @@
 import { RuleName } from "./rules/Rule";
 
-export type ValidationFailure = ValidationResult | {
+export interface ValidationFailureProperty {
     /**
      * If the property had `required` property and
      * was not declared
@@ -10,10 +10,6 @@ export type ValidationFailure = ValidationResult | {
      * Rules in which the validation failed
      */
     rules: RuleName[];
-};
-
-export interface ValidationFailures {
-    [s: string]: ValidationFailure;
 }
 
 /**
@@ -56,4 +52,10 @@ export default class ValidationResult {
 
         return this.failures;
     }
+}
+
+export type ValidationFailure = ValidationFailureProperty | ValidationResult;
+
+export interface ValidationFailures {
+    [s: string]: ValidationFailure;
 }
