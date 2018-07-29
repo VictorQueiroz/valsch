@@ -5,10 +5,10 @@ import Validator from '../Validator';
 import Rule from './Rule';
 
 export default class RuleArrayOf<T> extends Rule {
-    constructor(private validator: Validator<T>) {
+    constructor(private validator?: Validator<T>, private rule?: Rule) {
         super();
     }
-    public async validate(value: any) {
+    public async validate(value: any, property: any) {
         if(!Array.isArray(value))
             return false;
 
@@ -17,10 +17,30 @@ export default class RuleArrayOf<T> extends Rule {
         const failures: ValidationFailures = {};
 
         for(let i = 0; i < ii; i++) {
-            const result = await this.validator.validate(value[i]);
+            let result;
 
-            if((result instanceof ValidationResult) ? result.failed() : result != true) {
+            if(this.rule)
+                result = await this.rule.validate(value[i], property);
+            else if(this.validator)
+                result = await this.validator.validate(value[i]);
+            else
+                throw new Error('invalid arguments');
+
+            if(result instanceof ValidationResult && result.failed()) {
                 failures[i] = result;
+                failuresCount++;
+            } else if(typeof result == 'boolean' && result != true) {
+                let failure = failures[i];
+                if(failure instanceof ValidationResult) {
+                    throw new Error('A validator/rule should either always return ValidationResult or boolean');
+                }
+                if(!failure) {
+                    failure = { missing: false, rules: [] };
+                    failures[i] = failure;
+                }
+                if(this.rule) {
+                    failure.rules.push(this.rule.getName());
+                }
                 failuresCount++;
             }
         }
